@@ -1,4 +1,7 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+if(BUILD_CSS)
+  include_directories(${GECODE_INCLUDES})
+endif()
 
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mozart.gen
@@ -45,7 +48,18 @@ add_custom_target(genbuiltins
   DEPENDS coremodules.genbi
   VERBATIM)
 
+if(BUILD_CSS)
+  message(STATUS "Gecode headers: ${GECODE_INCLUDES}")
+  message(STATUS "Gecode libraries: ${GECODE_LIBRARIES}")
+  add_definitions(-DVM_HAS_CSS=1)
+endif()
+
+
 add_library(mozartvm emulate.cc memmanager.cc gcollect.cc
   unify.cc sclone.cc vm.cc coredatatypes.cc coders.cc properties.cc
   coremodules.cc)
 add_dependencies(mozartvm gensources genbuiltins)
+
+if(BUILD_CSS)
+  target_link_libraries(mozartvm ${GECODE_LIBRARIES})
+endif()

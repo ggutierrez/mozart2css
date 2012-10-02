@@ -7,5 +7,10 @@ if("${GTEST_SRC_DIR}" STREQUAL "${DEFAULT_GTEST_SRC_DIR}" AND
     TEST_COMMAND ""
     )
 endif()
+
+if(BUILD_CSS)
+  include(Gecode)
+endif()
+
 add_subdirectory(main)
 add_subdirectory(test)

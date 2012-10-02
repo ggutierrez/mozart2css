@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(MOZARTVM)
 
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-support")
+option(BUILD_CSS "Builds the constraint subsystem" Yes)
+
 include(ExternalProject)
 set(ep_base "${CMAKE_BINARY_DIR}/externals")
 set_property(DIRECTORY PROPERTY "EP_BASE" ${ep_base})
