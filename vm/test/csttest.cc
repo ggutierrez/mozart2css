@@ -12,7 +12,9 @@ class CstTest : public MozartTest {};
 
 TEST_F(CstTest, Build) {
   Space *currentSpace = vm->getCurrentSpace();
-  auto cst =  currentSpace->getCstSpace();
+  GecodeSpace& cst =  currentSpace->getCstSpace();
+  cst.dumpSpaceInformation();
+
 }
 
 #endif

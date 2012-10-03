@@ -52,5 +52,6 @@
 #include "string-decl.hh"
 #include "unit-decl.hh"
 #include "variables-decl.hh"
+#include "cstintvar-decl.hh" 
 
 #endif // __COREDATATYPES_DECL_H

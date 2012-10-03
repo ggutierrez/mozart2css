@@ -16,29 +16,41 @@ private:
   std::vector<Gecode::IntVar> _intVars;
   std::vector<Gecode::SetVar> _setVars;
 public:
-    GecodeSpace(void)
-      : Gecode::Space() {
-      std::cout << "Constructed gecode space" << std::endl;
-      Gecode::IntVar x(*this,0,1);
-      Gecode::SetVar y(*this,Gecode::IntSet::empty,Gecode::IntSet::empty);
-      _intVars.push_back(x);
-      _setVars.push_back(y);
-    }
-    GecodeSpace(bool share, GecodeSpace& other) 
-      : Gecode::Space(share,other),
-	_intVars(other._intVars),
-	_setVars(other._setVars)
-    {
-      for(auto i = _intVars.size(); i--;)
-	_intVars[i].update(*this,share,other._intVars[i]);
-      for(auto i = _setVars.size(); i--;)
-	_setVars[i].update(*this,share,other._setVars[i]);
-    }
-    virtual ~GecodeSpace(void) {
-      std::cout << "Destructed gecode space" << std::endl;
-    }
-    virtual Gecode::Space* copy(bool share) override {
-      return new GecodeSpace(share,*this);
-    }
+  GecodeSpace(void)
+    : Gecode::Space() {
+    std::cout << "Constructed gecode space" << std::endl;
+  }
+  GecodeSpace(bool share, GecodeSpace& other) 
+    : Gecode::Space(share,other),
+      _intVars(other._intVars),
+      _setVars(other._setVars)
+  {
+    for(auto i = _intVars.size(); i--;)
+      _intVars[i].update(*this,share,other._intVars[i]);
+    for(auto i = _setVars.size(); i--;)
+      _setVars[i].update(*this,share,other._setVars[i]);
+  }
+  virtual ~GecodeSpace(void) {
+    std::cout << "Destructed gecode space" << std::endl;
+  }
+  virtual Gecode::Space* copy(bool share) override {
+    return new GecodeSpace(share,*this);
+  }
+  Gecode::IntVar& intVar(size_t index) {
+    if (index >= _intVars.size())
+      std::cerr << "Accessing intVar at invalid index" << std::endl;
+    return _intVars[index];
+  }
+  Gecode::SetVar& setVar(size_t index) {
+    if (index >= _setVars.size())
+      std::cerr << "Accessing setVar at invalid index" << std::endl;
+    return _setVars[index];
+  }
+  void dumpSpaceInformation(void) const {
+    std::cout << "Space information" 
+	      << std::endl
+	      << "\tInteger variables: " << _intVars.size() << std::endl
+	      << "\tset variables: " << _setVars.size() << std::endl;
+  }
 };
 }

@@ -1,5 +1,6 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 if(BUILD_CSS)
+  add_definitions(-DVM_HAS_CSS=1)
   include_directories(${GECODE_INCLUDES})
 endif()
 
@@ -51,7 +52,7 @@ add_custom_target(genbuiltins
 if(BUILD_CSS)
   message(STATUS "Gecode headers: ${GECODE_INCLUDES}")
   message(STATUS "Gecode libraries: ${GECODE_LIBRARIES}")
-  add_definitions(-DVM_HAS_CSS=1)
+
 endif()
 
 
