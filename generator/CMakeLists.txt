@@ -3,6 +3,7 @@ if("${LLVM_SRC_DIR}" STREQUAL "${DEFAULT_LLVM_SRC_DIR}" AND
   ExternalProject_Add(llvm
     SVN_REPOSITORY http://llvm.org/svn/llvm-project/llvm/tags/RELEASE_31/final
     CMAKE_ARGS -DCMAKE_BUILD_TYPE:STRING=Release
+    UPDATE_COMMAND ""
     INSTALL_COMMAND ""
     TEST_COMMAND ""
     )
