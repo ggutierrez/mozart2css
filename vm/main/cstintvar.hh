@@ -8,9 +8,6 @@
 namespace mozart {
 #include "CstIntVar-implem.hh"
 
-void CstIntVar::create(size_t& self, VM vm, GR gr, Self from) {
-  self = from.get().value();
-}
 
 } // mozart
 

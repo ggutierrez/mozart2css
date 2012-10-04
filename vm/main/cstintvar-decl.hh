@@ -11,7 +11,10 @@ class CstIntVar;
 #include "CstIntVar-implem-decl.hh"
 #endif
 
-class CstIntVar: public DataType<CstIntVar>, Copyable, StoredAs<size_t>, WithValueBehavior {
+class CstIntVar: public WithHome,
+  public DataType<CstIntVar>,
+  public Transient,
+  public WithVariableBehavior<5> {
 public:
   typedef SelfType<CstIntVar>::Self Self;
 
@@ -19,16 +22,25 @@ public:
 
   // TODO: getTypeAtomg is missing
 
-  CstIntVar(size_t index) : _value(index) {}
+  // Constructor from min and max elements in the domain
+  CstIntVar(VM vm, RichNode min, RichNode max) 
+    : WithHome(vm), _varIndex(0) {}
 
-  static void create(size_t& self, VM, size_t value) {
-    self = value;
+  // Constructor from a list (?) describing the domain
+  CstIntVar(VM vm, RichNode domain)
+    : WithHome(vm), _varIndex(0) {
+      // TODO
+      assert(false);
   }
 
-  inline
-  static void create(size_t& self, VM vm, GR gr, Self from);
+  // TODO: Ask Sebastien about this constructor. The docs says that is needed
+  // if yes, what is its semantics?
+  // CstIntVar(VM vm, SpaceRef home)
+  //   : WithHome(home), _varIndex(0) {}
 
-  size_t value() const { return _value; }
+  CstIntVar(VM vm, GR gr, Self from)
+    : WithHome(vm,gr,from->home()), _varIndex(0) {}
+
 public:
   // Miscellaneous
   
@@ -36,7 +48,10 @@ public:
     //out << "IntVar index:" << _value;
     //}
 private:
-  const size_t _value;
+  // The actual representation of a constraint integer variable is a 
+  // Gecode::IntVar, here we store the index of an object of that class
+  // inside an array stored by a Gecode::Space
+  const size_t _varIndex;
 };// End class CstIntVar
 
 #ifndef MOZART_GENERATOR
