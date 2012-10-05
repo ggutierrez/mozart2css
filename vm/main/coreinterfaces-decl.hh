@@ -696,6 +696,27 @@ struct Interface<VirtualString>:
   }
 };
 
+class IntVarLike;
+template<>
+struct Interface<IntVarLike>:
+  ImplementedBy<SmallInt, CstIntVar> {
+
+    bool isIntVarLike(RichNode self, VM vm) {
+      return false;
+    }
+
+    int min(RichNode self, VM vm) {
+      raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    }
+
+    int max(RichNode self, VM vm) {
+      raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    }
+
+    UnstableNode intVar(RichNode self, VM vm) {
+      raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    }
+  };
 }
 
 #endif // __COREINTERFACES_DECL_H

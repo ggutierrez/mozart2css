@@ -9,7 +9,7 @@ add_custom_command(
   COMMAND ${LLVM_BUILD_DIR}/bin/clang++ -std=c++0x -femit-ast
     -Wno-invalid-noreturn -Wno-return-type
     -o ${CMAKE_CURRENT_BINARY_DIR}/mozart.ast
-    -DMOZART_GENERATOR
+    -DMOZART_GENERATOR -DVM_HAS_CSS=1 -I${GECODE_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/mozart.hh
   COMMAND generator intfimpl
     ${CMAKE_CURRENT_BINARY_DIR}/mozart.ast
@@ -31,7 +31,7 @@ add_custom_command(
     -Wno-invalid-noreturn -Wno-return-type
     -o ${CMAKE_CURRENT_BINARY_DIR}/coremodules.astbi
     -I ${CMAKE_CURRENT_BINARY_DIR}
-    -DMOZART_BUILTIN_GENERATOR
+    -DMOZART_BUILTIN_GENERATOR -DVM_HAS_CSS=1 -I${GECODE_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/coremodules.hh
   COMMAND generator builtins
     ${CMAKE_CURRENT_BINARY_DIR}/coremodules.astbi

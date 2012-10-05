@@ -27,6 +27,9 @@
 
 #include "mozartcore-decl.hh"
 
+// To be able to return a CstIntVar from an smallint
+#include "cstintvar-decl.hh"
+
 namespace mozart {
 
 class SmallInt;
@@ -143,6 +146,32 @@ public:
 
   inline
   nativeint vsLength(Self self, VM vm);
+
+public:
+  // IntVarLike interface
+  bool isIntVarLike(Self self, VM vm) {
+    return CstIntVar::validAsElement(value());
+  }
+
+  UnstableNode intVar(Self self, VM vm) {
+    //Space *home = vm->getCurrentSpace();
+    // GecodeSpace &s = home->getCstSpace();
+    return CstIntVar::build(vm,self);
+  }
+
+  int min(Self self, VM vm) {
+    // TODO: rise an error if is not IntVarLike
+    // if (!isIntVarLike(self,vm))
+    //   raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    return (int) value();
+  }
+
+  int max(Self self, VM vm) {
+    // TODO: rise an error if is not IntVarLike
+    // if (!isIntVarLike(self,vm))
+    //   raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    return (int) value();
+  }
 
 public:
   // Miscellaneous

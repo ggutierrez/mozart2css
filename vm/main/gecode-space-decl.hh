@@ -41,6 +41,10 @@ public:
       std::cerr << "Accessing intVar at invalid index" << std::endl;
     return _intVars[index];
   }
+  size_t newIntVar(int min, int max) {
+    _intVars.push_back(Gecode::IntVar(*this,min,max));
+    return _intVars.size() - 1;
+  }
   Gecode::SetVar& setVar(size_t index) {
     if (index >= _setVars.size())
       std::cerr << "Accessing setVar at invalid index" << std::endl;
