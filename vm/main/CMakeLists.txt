@@ -1,15 +1,13 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-if(BUILD_CSS)
-  add_definitions(-DVM_HAS_CSS=1)
-  include_directories(${GECODE_INCLUDES})
-endif()
+
+message(STATUS "The extra flags are ${GENERATOR_EXTRA_FLAGS}")
 
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mozart.gen
   COMMAND ${LLVM_BUILD_DIR}/bin/clang++ -std=c++0x -femit-ast
     -Wno-invalid-noreturn -Wno-return-type
     -o ${CMAKE_CURRENT_BINARY_DIR}/mozart.ast
-    -DMOZART_GENERATOR -DVM_HAS_CSS=1 -I${GECODE_INCLUDES}
+    -DMOZART_GENERATOR ${GENERATOR_EXTRA_FLAGS}
     ${CMAKE_CURRENT_SOURCE_DIR}/mozart.hh
   COMMAND generator intfimpl
     ${CMAKE_CURRENT_BINARY_DIR}/mozart.ast
@@ -31,7 +29,7 @@ add_custom_command(
     -Wno-invalid-noreturn -Wno-return-type
     -o ${CMAKE_CURRENT_BINARY_DIR}/coremodules.astbi
     -I ${CMAKE_CURRENT_BINARY_DIR}
-    -DMOZART_BUILTIN_GENERATOR -DVM_HAS_CSS=1 -I${GECODE_INCLUDES}
+    -DMOZART_BUILTIN_GENERATOR ${GENERATOR_EXTRA_FLAGS}
     ${CMAKE_CURRENT_SOURCE_DIR}/coremodules.hh
   COMMAND generator builtins
     ${CMAKE_CURRENT_BINARY_DIR}/coremodules.astbi
@@ -50,11 +48,9 @@ add_custom_target(genbuiltins
   VERBATIM)
 
 if(BUILD_CSS)
-  message(STATUS "Gecode headers: ${GECODE_INCLUDES}")
-  message(STATUS "Gecode libraries: ${GECODE_LIBRARIES}")
-
+  add_definitions(-DVM_HAS_CSS=1)
+  include_directories(${GECODE_INCLUDES})
 endif()
-
 
 add_library(mozartvm emulate.cc memmanager.cc gcollect.cc
   unify.cc sclone.cc vm.cc coredatatypes.cc coders.cc properties.cc
@@ -62,5 +58,6 @@ add_library(mozartvm emulate.cc memmanager.cc gcollect.cc
 add_dependencies(mozartvm gensources genbuiltins)
 
 if(BUILD_CSS)
+  add_dependencies(mozartvm ${GECODE_LIBRARIES})
   target_link_libraries(mozartvm ${GECODE_LIBRARIES})
 endif()

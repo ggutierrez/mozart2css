@@ -22,7 +22,7 @@ add_custom_command(
     -Wno-invalid-noreturn -Wno-return-type
     -o ${CMAKE_CURRENT_BINARY_DIR}/boostenv.ast
     -I ${CMAKE_CURRENT_SOURCE_DIR}/../../vm/main
-    -DMOZART_GENERATOR
+    -DMOZART_GENERATOR ${GENERATOR_EXTRA_FLAGS}
     ${CMAKE_CURRENT_SOURCE_DIR}/boostenv.hh
   COMMAND generator intfimpl
     ${CMAKE_CURRENT_BINARY_DIR}/boostenv.ast
@@ -48,7 +48,7 @@ add_custom_command(
     -I ${CMAKE_CURRENT_BINARY_DIR}
     -I ${CMAKE_CURRENT_SOURCE_DIR}/../../vm/main
     -I ${CMAKE_CURRENT_BINARY_DIR}/../../vm/main
-    -DMOZART_BUILTIN_GENERATOR
+    -DMOZART_BUILTIN_GENERATOR ${GENERATOR_EXTRA_FLAGS}
     ${CMAKE_CURRENT_SOURCE_DIR}/boostenvmodules.hh
   COMMAND generator builtins
     ${CMAKE_CURRENT_BINARY_DIR}/boostenvmodules.astbi
@@ -67,6 +67,11 @@ add_custom_target(genboostbuiltins
   VERBATIM)
 
 # Boost environment library
+
+if(BUILD_CSS)
+  add_definitions(-DVM_HAS_CSS=1)
+  include_directories(${GECODE_INCLUDES})
+endif()
 
 add_library(mozartvmboost boostenv.cc boostenvmodules.cc)
 add_dependencies(mozartvmboost genboostsources genboostbuiltins)

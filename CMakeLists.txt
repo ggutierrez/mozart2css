@@ -21,5 +21,14 @@ add_subdirectory(generator)
 
 set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -O3 -DNDEBUG")
 
+set(GENERATOR_EXTRA_FLAGS)
+if(BUILD_CSS)
+  include(Gecode)
+  separate_arguments(GENERATOR_EXTRA_FLAGS UNIX_COMMAND "-DVM_HAS_CSS=1 -I${GECODE_INCLUDES}")
+#  message(STATUS "Gecode headers: ${GECODE_INCLUDES}")
+#  message(STATUS "Gecode libraries: ${GECODE_LIBRARIES}")
+
+endif()
+
 add_subdirectory(vm)
 add_subdirectory(boostenv)
