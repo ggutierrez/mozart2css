@@ -696,6 +696,15 @@ struct Interface<VirtualString>:
   }
 };
 
+class ConstraintVar;
+template<>
+struct Interface<ConstraintVar>:
+  ImplementedBy<SmallInt, CstIntVar> {
+    bool assigned(RichNode self, VM vm) {
+      raiseTypeError(vm, MOZART_STR("ConstraintVariable"), self);
+    }
+};
+
 class IntVarLike;
 template<>
 struct Interface<IntVarLike>:
@@ -703,6 +712,10 @@ struct Interface<IntVarLike>:
 
     bool isIntVarLike(RichNode self, VM vm) {
       return false;
+    }
+
+    UnstableNode intVar(RichNode self, VM vm) {
+      raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
 
     UnstableNode min(RichNode self, VM vm) {
@@ -713,9 +726,13 @@ struct Interface<IntVarLike>:
       raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
 
-    UnstableNode intVar(RichNode self, VM vm) {
+    UnstableNode value(RichNode self, VM vm) {
       raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
+
+    UnstableNode isIn(RichNode self, VM vm, RichNode right) {
+      raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
+    }    
   };
 }
 

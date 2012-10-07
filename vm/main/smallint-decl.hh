@@ -27,9 +27,6 @@
 
 #include "mozartcore-decl.hh"
 
-// To be able to return a CstIntVar from an smallint
-#include "cstintvar-decl.hh"
-
 namespace mozart {
 
 class SmallInt;
@@ -149,9 +146,8 @@ public:
 
 public:
   // IntVarLike interface
-  bool isIntVarLike(Self self, VM vm) {
-    return CstIntVar::validAsElement(value());
-  }
+  inline
+  bool isIntVarLike(Self self, VM vm);
 
   inline
   UnstableNode intVar(Self self, VM vm);
@@ -162,6 +158,16 @@ public:
   inline
   UnstableNode max(Self self, VM vm);
 
+  inline
+  UnstableNode value(Self self, VM vm);
+
+  inline
+  UnstableNode isIn(Self self, VM vm, RichNode right);
+  
+public:
+  // ConstraintVar interface
+  inline
+  bool assigned(Self self, VM vm);
 public:
   // Miscellaneous
 

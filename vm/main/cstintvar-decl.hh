@@ -1,7 +1,6 @@
 #ifndef __CSTINTVAR_DECL_H
 #define __CSTINTVAR_DECL_H
 
-#include <climits>
 #include "mozartcore-decl.hh"
 
 namespace mozart {
@@ -45,19 +44,12 @@ public:
   CstIntVar(VM vm, GR gr, Self from)
     : WithHome(vm,gr,from->home()), _varIndex(0) {}
 
-  static bool validAsElement(nativeint x) {
-    // Conceptually this method should return true for any integer.
-    // As we talk about integer decision variables then any integer n
-    // will represent the (instantiated) domain [n,n].
-    // The practical limitation is that an element in a domain must be in
-    // a range [min,max]. This limitation is imposed by gecode. max is defined
-    // as INT_MAX-1 (gecode/int.hh:111) and min is defined as -max.
-    // From this we can say that an small integer can be part of a domain if and
-    // only if it is in that range.
+  inline
+  static bool validAsElement(nativeint x);
 
-    int max = INT_MAX - 1;
-    int min = -max;
-    return x <= max && x >= min;
+private:  
+  Gecode::IntVar& getVar(void) {
+    return home()->getCstSpace().intVar(_varIndex);
   }
 public:
   // IntVarLike interface
@@ -75,12 +67,23 @@ public:
 
   inline
   UnstableNode max(Self self, VM vm);
+
+  inline
+  UnstableNode value(Self self, VM vm);
+
+  inline
+  UnstableNode isIn(Self self, VM vm, RichNode right);
+public:
+  // ConstraintVar interface
+  inline
+  bool assigned(Self self, VM vm) {
+    return getVar().assigned();
+  }
 public:
   // Miscellaneous
-  
-    //  void printReprToStream(Self self, VM vm, std::ostream& out, int depth) {
-    //out << "IntVar index:" << _value;
-    //}
+  void printReprToStream(Self self, VM vm, std::ostream& out, int depth) {
+    out << getVar();
+  }
 private:
   // The actual representation of a constraint integer variable is a 
   // Gecode::IntVar, here we store the index of an object of that class

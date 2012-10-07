@@ -25,14 +25,44 @@ CstIntVar::CstIntVar(VM vm, RichNode min, RichNode max)
   _varIndex = sp.newIntVar((int)mn,(int)mx);
 }
 
+bool CstIntVar::validAsElement(nativeint x) {
+  // Conceptually this method should return true for any integer.
+  // As we talk about integer decision variables then any integer n
+  // will represent the (instantiated) domain [n,n].
+  // The practical limitation is that an element in a domain must be in
+  // a range [min,max]. This limitation is imposed by gecode. max is defined
+  // as INT_MAX-1 (gecode/int.hh:111) and min is defined as -max.
+  // From this we can say that an small integer can be part of a domain if and
+  // only if it is in that range.
+
+  int max = INT_MAX - 1;
+  int min = -max;
+  return x <= max && x >= min;
+}
+
+// IntVarLike ------------------------------------------------------------------
+
 UnstableNode CstIntVar::min(Self self, VM vm) {
-  int mn = home()->getCstSpace().intVar(_varIndex).min();
-  return SmallInt::build(vm,mn);
+  return SmallInt::build(vm,getVar().min());
 }
 
 UnstableNode CstIntVar::max(Self self, VM vm) {
-  int mx = home()->getCstSpace().intVar(_varIndex).max();
-  return SmallInt::build(vm,mx);
+  return SmallInt::build(vm,getVar().max());
+}
+
+UnstableNode CstIntVar::value(Self self, VM vm) {
+  if (!assigned(self,vm))
+    raiseTypeError(vm,MOZART_STR("IntVarLike"),self);
+  return SmallInt::build(vm,getVar().val());
+}
+
+UnstableNode CstIntVar::isIn(Self self, VM vm, RichNode right) {
+  nativeint r = getArgument<nativeint>(vm, right, MOZART_STR("integer"));
+  if(!CstIntVar::validAsElement(r))
+    raiseTypeError(vm,MOZART_STR("IntVarLike"),self);
+  int e = (int)r;
+  return getVar().in(e) ? 
+    Boolean::build(vm,true) : Boolean::build(vm,false);
 }
 
 } // mozart
