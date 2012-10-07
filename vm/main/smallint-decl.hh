@@ -153,25 +153,14 @@ public:
     return CstIntVar::validAsElement(value());
   }
 
-  UnstableNode intVar(Self self, VM vm) {
-    //Space *home = vm->getCurrentSpace();
-    // GecodeSpace &s = home->getCstSpace();
-    return CstIntVar::build(vm,self);
-  }
+  inline
+  UnstableNode intVar(Self self, VM vm);
 
-  int min(Self self, VM vm) {
-    // TODO: rise an error if is not IntVarLike
-    // if (!isIntVarLike(self,vm))
-    //   raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
-    return (int) value();
-  }
+  inline
+  UnstableNode min(Self self, VM vm);
 
-  int max(Self self, VM vm) {
-    // TODO: rise an error if is not IntVarLike
-    // if (!isIntVarLike(self,vm))
-    //   raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
-    return (int) value();
-  }
+  inline
+  UnstableNode max(Self self, VM vm);
 
 public:
   // Miscellaneous

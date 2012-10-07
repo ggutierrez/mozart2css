@@ -705,11 +705,11 @@ struct Interface<IntVarLike>:
       return false;
     }
 
-    int min(RichNode self, VM vm) {
+    UnstableNode min(RichNode self, VM vm) {
       raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
 
-    int max(RichNode self, VM vm) {
+    UnstableNode max(RichNode self, VM vm) {
       raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
 

@@ -210,6 +210,24 @@ nativeint SmallInt::vsLength(Self self, VM vm) {
   return (nativeint) std::to_string(value()).length();
 }
 
+// CstIntVar -------------------------------------------------------------------
+
+UnstableNode SmallInt::intVar(Self self, VM vm) {
+    return CstIntVar::build(vm,self,self);
+}
+
+UnstableNode SmallInt::min(Self self, VM vm) {
+  if(!CstIntVar::validAsElement(value()))
+    raiseTypeError(vm,MOZART_STR("IntVarLike"),self);
+  return SmallInt::build(vm,value());
+}
+
+UnstableNode SmallInt::max(Self self, VM vm) {
+  if(!CstIntVar::validAsElement(value()))
+    raiseTypeError(vm,MOZART_STR("IntVarLike"),self);
+  return SmallInt::build(vm,value());
+}
+
 }
 
 #endif // MOZART_GENERATOR

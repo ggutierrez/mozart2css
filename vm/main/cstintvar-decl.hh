@@ -70,13 +70,11 @@ public:
     return CstIntVar::build(vm,_varIndex);
   }
 
-  int min(Self self, VM vm) {
-    return home()->getCstSpace().intVar(_varIndex).min();
-  }
+  inline
+  UnstableNode min(Self self, VM vm);
 
-  int max(Self self, VM vm) {
-    return home()->getCstSpace().intVar(_varIndex).max();
-  }
+  inline
+  UnstableNode max(Self self, VM vm);
 public:
   // Miscellaneous
   
