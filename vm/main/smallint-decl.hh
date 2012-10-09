@@ -150,7 +150,7 @@ public:
   bool isIntVarLike(Self self, VM vm);
 
   inline
-  UnstableNode intVar(Self self, VM vm);
+  Gecode::IntVar& intVar(Self self, VM vm);
 
   inline
   UnstableNode min(Self self, VM vm);

@@ -42,12 +42,12 @@ public:
   //   : WithHome(home), _varIndex(0) {}
 
   CstIntVar(VM vm, GR gr, Self from)
-    : WithHome(vm,gr,from->home()), _varIndex(0) {}
+    : WithHome(vm,gr,from->home()), _varIndex(from->_varIndex) {}
 
   inline
   static bool validAsElement(nativeint x);
 
-private:  
+public:
   Gecode::IntVar& getVar(void) {
     return home()->getCstSpace().intVar(_varIndex);
   }
@@ -57,9 +57,8 @@ public:
     return true;
   }
 
-  UnstableNode intVar(Self self, VM vm) {
-    // TODO: Is there a nicer way to return an unstable node containing this?
-    return CstIntVar::build(vm,_varIndex);
+  Gecode::IntVar& intVar(Self self, VM vm) {
+    return getVar();
   }
 
   inline

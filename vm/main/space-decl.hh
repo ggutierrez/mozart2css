@@ -340,6 +340,9 @@ public:
   inline
   GecodeSpace& getCstSpace();
 
+  inline
+  bool hasConstraintSpace();
+
 // Fields
 
 private:

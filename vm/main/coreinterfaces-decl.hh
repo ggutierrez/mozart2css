@@ -714,7 +714,7 @@ struct Interface<IntVarLike>:
       return false;
     }
 
-    UnstableNode intVar(RichNode self, VM vm) {
+    Gecode::IntVar& intVar(RichNode self, VM vm) {
       raiseTypeError(vm, MOZART_STR("IntVarLike"), self);
     }
 

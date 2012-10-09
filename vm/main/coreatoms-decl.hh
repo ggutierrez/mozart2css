@@ -86,6 +86,22 @@ struct CoreAtoms {
   atom_t spaceAltRange;
   atom_t spaceMerged;
   atom_t indexOutOfBounds;
+
+  // Constraint programming
+  // Integer relation types
+  atom_t irt_eq;
+  atom_t irt_nq;
+  atom_t irt_lq;
+  atom_t irt_le;
+  atom_t irt_gq;
+  atom_t irt_gr;
+
+  // Integer consistency levels
+  atom_t icl_val;
+  atom_t icl_bnd;
+  atom_t icl_dom;
+  atom_t icl_def;
+
 };
 
 }

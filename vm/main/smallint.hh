@@ -216,8 +216,9 @@ bool SmallInt::isIntVarLike(Self self, VM vm) {
   return CstIntVar::validAsElement(value());
 }
 
-UnstableNode SmallInt::intVar(Self self, VM vm) {
-    return CstIntVar::build(vm,self,self);
+Gecode::IntVar& SmallInt::intVar(Self self, VM vm) {
+  CstIntVar x(vm,self,self);
+  return x.getVar();
 }
 
 UnstableNode SmallInt::min(Self self, VM vm) {

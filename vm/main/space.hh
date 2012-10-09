@@ -621,6 +621,10 @@ GecodeSpace& Space::getCstSpace() {
   return *_cstSpace;
 }
 
+bool Space::hasConstraintSpace() {
+  return _cstSpace != nullptr;
+}
+
 }
 
 #endif // MOZART_GENERATOR

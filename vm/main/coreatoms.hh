@@ -74,6 +74,18 @@ void CoreAtoms::initialize(VM vm, AtomTable& atomTable) {
   spaceAltRange = atomTable.get(vm, MOZART_STR("spaceAltRange"));
   spaceMerged = atomTable.get(vm, MOZART_STR("spaceMerged"));
   indexOutOfBounds = atomTable.get(vm, MOZART_STR("indexOutOfBounds"));
+
+  irt_eq = atomTable.get(vm, MOZART_STR("IRT_EQ"));
+  irt_nq = atomTable.get(vm, MOZART_STR("IRT_NQ"));
+  irt_lq = atomTable.get(vm, MOZART_STR("IRT_LQ"));
+  irt_le = atomTable.get(vm, MOZART_STR("IRT_LE"));
+  irt_gq = atomTable.get(vm, MOZART_STR("IRT_GQ"));
+  irt_gr = atomTable.get(vm, MOZART_STR("IRT_GR"));
+
+  icl_val = atomTable.get(vm, MOZART_STR("ICL_VAL"));
+  icl_bnd = atomTable.get(vm, MOZART_STR("ICL_BND"));
+  icl_dom = atomTable.get(vm, MOZART_STR("ICL_DOM"));
+  icl_def = atomTable.get(vm, MOZART_STR("ICL_DEF"));
 }
 
 }
