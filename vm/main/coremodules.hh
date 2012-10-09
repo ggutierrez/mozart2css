@@ -55,5 +55,5 @@
 #include "modules/moddebug.hh"
 #include "modules/modproperty.hh"
 #include "modules/modintvar.hh"
-
+#include "modules/modpropagators.hh"
 #endif // __COREMODULES_H
