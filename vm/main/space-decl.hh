@@ -336,12 +336,10 @@ private:
   }
 
 // Constraint subsystem
-#ifdef VM_HAS_CSS
 public:
-  GecodeSpace& getCstSpace() {
-    return _cstSpace;
-  }
-#endif
+  inline
+  GecodeSpace& getCstSpace();
+
 // Fields
 
 private:
@@ -371,9 +369,8 @@ private:
   SpaceTrail trail;
   SpaceScript script;
 
-#ifdef VM_HAS_CSS
-  GecodeSpace _cstSpace;
-#endif
+  // Gecode space associated with this mozart space
+  GecodeSpace* _cstSpace;
 
   /*
    * Maintaining a counter of threads
