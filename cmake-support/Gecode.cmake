@@ -19,6 +19,7 @@ if("${GECODE_SRC_DIR}" STREQUAL "${DEFAULT_GECODE_SRC_DIR}" AND
     PATCH_COMMAND ""
     CONFIGURE_COMMAND ${GECODE_SRC_DIR}/configure
       --enable-static --disable-shared --prefix=${GECODE_INSTALL_DIR}
+      --libdir=${GECODE_INSTALL_DIR}/lib
       --disable-gist --disable-flatzinc --disable-examples 
       --disable-qt --disable-driver --disable-minimodel
     BUILD_COMMAND make
